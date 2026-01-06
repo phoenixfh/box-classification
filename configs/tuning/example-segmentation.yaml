@@ -1,0 +1,50 @@
+# 分割任务调优示例配置
+# 适用场景：U-Net等分割模型的超参数调优
+
+# 搜索策略
+strategy: optuna
+n_trials: 15
+
+# 优化目标（分割任务使用dice分数）
+metric: dice
+mode: maximize
+
+# 超参数搜索空间
+search_space:
+  # 学习率
+  lr:
+    type: log_uniform
+    min: 0.0001
+    max: 0.01
+  
+  # 批量大小（分割任务显存占用大）
+  batch_size:
+    type: choice
+    values: [2, 4, 8]
+  
+  # 图像尺寸（分割任务需要更大的尺寸）
+  img_size:
+    type: choice
+    values: [1024, 1536, 2048]
+  
+  # 图像缩放比例（节省显存）
+  scale:
+    type: uniform
+    min: 0.5
+    max: 1.0
+  
+  # 权重衰减
+  wd:
+    type: log_uniform
+    min: 1e-5
+    max: 1e-3
+
+# 固定参数
+base_args:
+  data_path: /mnt/ssd/core-unet-data
+  arch: unet_seg  # 使用U-Net分割模型
+  epochs: 1000
+  early_stopping: 30
+  pretrained: false
+  project_name: unet-segmentation
+  task_name: unet-optuna-tuning

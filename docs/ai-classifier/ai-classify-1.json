@@ -1,0 +1,18 @@
+{
+    "mapping": {
+        "ASCUST": "ASCUST",
+        "ASCHT": "ASCHT",
+        "LSILT": "LSILT",
+        "WKT": "LSILT",
+        "HSILT": "HSILT",
+        "AGC": "AGCT",
+        "AGCT": "AGCT",
+        "CSCT": "CSCT",
+        "BSCT": "BSCT",
+        "RCT": "RCT",
+        "NACT": "NACT",
+        "JGT": "JGT",
+        "NY": "NY",
+        "IMP": "IMP"
+    }
+}

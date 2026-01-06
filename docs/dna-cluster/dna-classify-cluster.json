@@ -1,0 +1,20 @@
+{
+    "mapping": {
+        "BSCT": "negative",
+        "NACT": "negative",
+        "RCT": "negative",
+        "JGT": "negative",
+        "GN": "negative",
+        "NY": "negative",
+        "FXJ": "negative",
+        "XS": "negative",
+        "WK": "positive",
+        "WKT": "positive",
+        "ASCUST": "positive",
+        "ASCHT": "positive",
+        "LSILT": "positive",
+        "HSILT": "positive",
+        "AGCT": "positive",
+        "AC": "positive"
+    }
+}

@@ -1,0 +1,54 @@
+# 随机搜索示例配置
+# 适用场景：参数空间大，随机采样探索
+
+# 搜索策略
+strategy: random
+n_trials: 20  # 随机采样20组参数
+
+# 优化目标
+metric: accuracy
+mode: maximize
+
+# 随机种子（可选，用于复现）
+seed: 42
+
+# 超参数搜索空间
+search_space:
+  # 学习率：对数范围随机采样
+  lr:
+    type: log_uniform
+    min: 0.0001
+    max: 0.1
+  
+  # 最终学习率比例
+  lrf:
+    type: uniform
+    min: 0.05
+    max: 0.3
+  
+  # 批量大小：从候选值中随机选择
+  batch_size:
+    type: choice
+    values: [64, 128, 256]
+  
+  # 图像尺寸：从候选值中随机选择
+  img_size:
+    type: choice
+    values: [224, 320, 448, 640]
+  
+  # 权重衰减：对数范围随机采样
+  wd:
+    type: log_uniform
+    min: 1e-5
+    max: 1e-2
+
+# 固定参数
+base_args:
+  data_path: /mnt/ssd/ai-classify-data
+  arch: resnet18
+  epochs: 1000
+  early_stopping: 15
+  grad_acc: 4
+  pretrained: false
+  project_name: ai-classifier
+  task_name: resnet18-random-search

@@ -1,0 +1,33 @@
+# 快速调优示例配置
+# 适用场景：快速验证调优功能，小参数空间
+
+# 搜索策略
+strategy: grid
+
+# 优化目标
+metric: accuracy
+mode: maximize
+
+# 超参数搜索空间（小规模）
+search_space:
+  lr: [0.01, 0.1]
+  batch_size: [128, 256]
+  img_size: [224, 320]
+
+# 固定参数
+base_args:
+  data_path: /mnt/ssd/ai-classify-data
+  arch: resnet18
+  epochs: 10  # 快速验证，只训练10个epoch
+  early_stopping: 5
+  grad_acc: 4
+  pretrained: false
+  project_name: ai-classifier
+  task_name: quick-tune
+  
+  # 限制数据集大小以加快训练
+  train_size: 100  # 每类只用100个样本
+  val_size: 50     # 每类只用50个样本
+
+# 总组合数: 2 x 2 x 2 = 8 个试验
+# 预计耗时: ~20-40分钟（取决于硬件）

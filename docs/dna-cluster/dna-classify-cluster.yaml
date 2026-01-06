@@ -1,0 +1,29 @@
+
+# /datasets/
+# └── coco128/  # Dataset root
+#     ├── images/
+#     │   ├── train2017/  # Training images
+#     │   │   ├── 000000000009.jpg
+#     │   │   └── ...
+#     │   └── val2017/    # Validation images (optional if using same set for train/val)
+#     │       └── ...
+#     └── labels/
+#         ├── train2017/  # Training labels
+#         │   ├── 000000000009.txt
+#         │   └── ...
+#         └── val2017/    # Validation labels (optional if using same set for train/val)
+#             └── ...
+
+# Dataset root directory relative to the yolov5 directory
+path: /mnt/ssd/dna-classify-cluster-data
+
+train: train # train images (relative to 'path') 128 images
+val: val # val images (relative to 'path') 128 images
+test: # test images (optional)
+
+nc: 2
+
+# Classes
+names:
+    0: negative
+    1: positive

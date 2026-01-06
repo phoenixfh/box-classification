@@ -1,0 +1,33 @@
+{
+    "mapping": {
+        "ASCUST": "ASCUST",
+        "ASCUS": "ASCUS",
+        "ASCH": "ASCH",
+        "ASCHT": "ASCHT",
+        "LSIL": "LSIL",
+        "WK": "LSIL",
+        "LSILT": "LSILT",
+        "WKT": "LSILT",
+        "HSIL": "HSIL",
+        "HSILT": "HSILT",
+        "AGC": "AGCT",
+        "AC": "AGCT",
+        "AGCT": "AGCT",
+        "CSCT": "NT",
+        "BSCT": "NT",
+        "RCT": "NT",
+        "NACT": "NACT",
+        "CSC": "N",
+        "BSC": "N",
+        "RC": "N",
+        "NAC": "NAC",
+        "JG": "JG",
+        "JGT": "JGT",
+        "FXJ": "FXJ",
+        "XS": "XS",
+        "ZJ": "ZJ",
+        "DC": "DC",
+        "NY": "IMP",
+        "IMP": "IMP"
+    }
+}

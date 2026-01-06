@@ -1,0 +1,9 @@
+{
+    "field": "cellType",
+    "mapping": 
+    {
+        "single": 0,
+        "cluster": 0,
+        "micro": 0
+    }
+}

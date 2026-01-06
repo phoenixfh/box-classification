@@ -1,0 +1,22 @@
+{
+    "field": "label",
+    "mapping":
+    {
+        "BSCT": 0,
+        "NACT": 0,
+        "RCT": 0,
+        "JGT": 0,
+        "GN": 0,
+        "NY": 0,
+        "FXJ": 0,
+        "XS": 0,
+        "WK": 0,
+        "WKT": 0,
+        "ASCUST": 0,
+        "ASCHT": 0,
+        "LSILT": 0,
+        "HSILT": 0,
+        "AGCT": 0,
+        "AC": 0
+    }
+}

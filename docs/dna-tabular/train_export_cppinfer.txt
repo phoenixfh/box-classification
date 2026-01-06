@@ -1,0 +1,146 @@
+*********************
+torun_cpp_infer.sh
+*********************
+#!/bin/bash
+set -e
+
+echo "🔧 Building and running C++ ONNX Inference"
+echo "==========================================="
+
+# Project paths
+PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CPP_DIR="${PROJECT_DIR}/cpp_tabular"
+BUILD_DIR="${CPP_DIR}/build"
+OUTPUT_DIR="${PROJECT_DIR}/fastai_output"
+
+# First, export ONNX with embedded scaler if not exists or outdated
+if [ ! -f "${OUTPUT_DIR}/best.onnx" ] || [ "${OUTPUT_DIR}/best.pt" -nt "${OUTPUT_DIR}/best.onnx" ]; then
+    echo ""
+    echo "📦 Exporting ONNX model with embedded scaler..."
+    PYTHONPATH=. python fastai/export_onnx_tabular.py \
+        --model ./fastai_output/best.pt \
+        --output ./fastai_output/best.onnx \
+        --no_verify
+fi
+
+# Build
+echo ""
+echo "🔨 Building C++ project..."
+mkdir -p "${BUILD_DIR}"
+cd "${BUILD_DIR}"
+
+cmake .. -DCMAKE_BUILD_TYPE=Release -DONNXRUNTIME_ROOT_DIR=/usr/local
+make -j$(nproc)
+
+# Run
+echo ""
+echo "🚀 Running inference..."
+echo ""
+
+./onnx_infer \
+    --onnx_model "${OUTPUT_DIR}/best.onnx" \
+    --onnx_verify_data "${PROJECT_DIR}/fastai/data.csv" \
+    --batch_size 100
+
+*********************
+torun_export.sh
+*********************
+PYTHONPATH=. python fastai/export_onnx_tabular.py \
+    --model ./fastai_output/best.pt \
+    --output ./fastai_output/best.onnx \
+    --onnx_verify_data ./fastai/data.csv
+
+*********************
+torun_train.sh
+*********************
+PYTHONPATH=.  python fastai/train_tabular.py \
+    --data fastai/data.csv \
+    --target_col label \
+    --use_all_features \
+    --hidden_dims 512,256,128 \
+    --epochs 2 \
+    --batch_size 64 \
+    --lr 0.001 \
+    --dropout 0.5 \
+    --output_dir ./fastai_output \
+    --project_name mlp-classification \
+    --task_name mlp-exp1
+
+
+
+
+EOF
+
+(jd_fastai) root@cuda_0:/home/jd/t/git/box-classification# perl_show_files_content torun_train.sh  torun_export.sh torun_cpp_infer.sh
+*********************
+torun_train.sh
+*********************
+PYTHONPATH=.  python fastai/train_tabular.py \
+    --data fastai/data.csv \
+    --target_col label \
+    --use_all_features \
+    --hidden_dims 512,256,128 \
+    --epochs 2 \
+    --batch_size 64 \
+    --lr 0.001 \
+    --dropout 0.5 \
+    --output_dir ./fastai_output \
+    --project_name mlp-classification \
+    --task_name mlp-exp1
+
+
+
+
+*********************
+torun_export.sh
+*********************
+PYTHONPATH=. python fastai/export_onnx_tabular.py \
+    --model ./fastai_output/best.pt \
+    --output ./fastai_output/best.onnx \
+    --onnx_verify_data ./fastai/data.csv
+
+*********************
+torun_cpp_infer.sh
+*********************
+#!/bin/bash
+set -e
+
+echo "🔧 Building and running C++ ONNX Inference"
+echo "==========================================="
+
+# Project paths
+PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CPP_DIR="${PROJECT_DIR}/cpp_tabular"
+BUILD_DIR="${CPP_DIR}/build"
+OUTPUT_DIR="${PROJECT_DIR}/fastai_output"
+
+# First, export ONNX with embedded scaler if not exists or outdated
+if [ ! -f "${OUTPUT_DIR}/best.onnx" ] || [ "${OUTPUT_DIR}/best.pt" -nt "${OUTPUT_DIR}/best.onnx" ]; then
+    echo ""
+    echo "📦 Exporting ONNX model with embedded scaler..."
+    PYTHONPATH=. python fastai/export_onnx_tabular.py \
+        --model ./fastai_output/best.pt \
+        --output ./fastai_output/best.onnx \
+        --no_verify
+fi
+
+# Build
+echo ""
+echo "🔨 Building C++ project..."
+mkdir -p "${BUILD_DIR}"
+cd "${BUILD_DIR}"
+
+cmake .. -DCMAKE_BUILD_TYPE=Release -DONNXRUNTIME_ROOT_DIR=/usr/local
+make -j$(nproc)
+
+# Run
+echo ""
+echo "🚀 Running inference..."
+echo ""
+
+./onnx_infer \
+    --onnx_model "${OUTPUT_DIR}/best.onnx" \
+    --onnx_verify_data "${PROJECT_DIR}/fastai/data.csv" \
+    --batch_size 100
+
+

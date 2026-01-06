@@ -1,0 +1,16 @@
+{
+    "mapping": {
+        "ASCUS": "ASCUS",
+        "ASCH": "ASCH",
+        "LSIL": "LSIL",
+        "WK": "WK",
+        "HSIL": "HSIL",
+        "AC": "AC",
+        "CSC": "CSC",
+        "BSC": "BSC",
+        "RC": "RC",
+        "NAC": "NAC",
+        "JG": "JG",
+        "IMP": "IMP"
+    }
+}

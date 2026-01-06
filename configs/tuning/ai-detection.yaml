@@ -1,0 +1,76 @@
+# YOLO 检测模型超参数调优配置示例
+# 使用 Optuna 贝叶斯优化
+
+# 搜索策略
+strategy: optuna
+n_trials: 15  # 试验次数
+
+# 优化目标
+metric: final/mAP50-95
+mode: maximize  # 最大化 mAP
+
+# 超参数搜索空间
+search_space:
+  # 学习率（初始）
+  lr0:
+    type: log_uniform
+    min: 0.001
+    max: 0.01
+  
+  # 批次大小
+  batch:
+    type: choice
+    values: [2]
+  
+  # 图像尺寸
+  imgsz:
+    type: choice
+    values: [640, 800, 1024]
+  
+  model:
+    type: choice
+    values: ['yolo11n.pt', 'yolo11l.pt']
+
+  # 优化器
+  optimizer:
+    type: choice
+    values: ['SGD', 'Adam', 'AdamW']
+  
+  # 数据增强 - 旋转角度
+  degrees:
+    type: uniform
+    min: 0.0
+    max: 45.0
+  
+  # 数据增强 - Mosaic 概率
+  mosaic:
+    type: uniform
+    min: 0.5
+    max: 1.0
+  
+  # 权重衰减
+  weight_decay:
+    type: log_uniform
+    min: 0.0001
+    max: 0.001
+
+# 固定参数（所有 trials 共享）
+base_args:
+  # 数据集配置（必需）
+  data_yaml: docs/ai-classifier/ai-one.yaml
+  
+  # 训练轮数
+  epochs: 100
+  
+  # 早停耐心值
+  patience: 20
+  
+  # MLflow 配置
+  project_name: ai-detection-tuning
+  task_name: yolo11n-optuna
+  mlflow_uri: http://192.168.16.130:5000/
+  
+  # 其他固定参数
+  close_mosaic: 10  # 最后10个epoch关闭mosaic
+  amp: true  # 自动混合精度训练
+  

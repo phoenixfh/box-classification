@@ -1,0 +1,49 @@
+# 分布式多GPU训练的调优配置示例
+# 使用场景：有多个GPU，希望加速训练和调优过程
+
+# 搜索策略：随机搜索（推荐用于分布式训练，可以快速探索参数空间）
+strategy: random
+
+# 试验次数（随机搜索必需）
+n_trials: 20
+
+# 优化目标
+metric: accuracy
+mode: maximize
+
+# 超参数搜索空间
+search_space:
+  # 学习率：在对数空间随机采样
+  lr: 
+    type: loguniform
+    low: 0.0001
+    high: 0.1
+  
+  # 批量大小：离散值随机选择
+  # 注意：分布式训练时，实际batch_size会在每个GPU上应用
+  batch_size: [64, 128, 256, 512]
+  
+  # 权重衰减
+  wd:
+    type: loguniform
+    low: 1e-5
+    high: 1e-2
+  
+  # 图像尺寸
+  img_size: [224, 320, 416]
+
+# 固定参数（不参与搜索）
+base_args:
+  data_path: /mnt/ssd/ai-classify-data
+  arch: resnet50
+  epochs: 100
+  early_stopping: 15
+  grad_acc: 2
+  pretrained: true
+  project_name: ai-classifier
+  task_name: resnet50-distributed-tuning
+  mlflow_uri: http://192.168.16.130:5000/
+
+# 使用方法：
+# 单GPU: python fastai/tune.py --config configs/tuning/example-distributed.yaml
+# 多GPU: torchrun --nproc_per_node=4 fastai/tune.py --config configs/tuning/example-distributed.yaml --distributed

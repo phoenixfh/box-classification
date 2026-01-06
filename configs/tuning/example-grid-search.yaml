@@ -1,0 +1,36 @@
+# 网格搜索示例配置
+# 适用场景：参数空间较小，想要完全遍历所有组合
+
+# 搜索策略
+strategy: grid
+
+# 优化目标
+metric: accuracy
+mode: maximize
+
+# 超参数搜索空间
+search_space:
+  # 学习率：测试3个值
+  lr: [0.001, 0.01, 0.1]
+  
+  # 批量大小：测试3个值
+  batch_size: [64, 128, 256]
+  
+  # 图像尺寸：测试2个值（分类任务）
+  img_size: [224, 320]
+  
+  # 权重衰减：测试2个值
+  wd: [1e-4, 1e-3]
+
+# 固定参数（不参与搜索）
+base_args:
+  data_path: /mnt/ssd/ai-classify-data
+  arch: resnet18
+  epochs: 50  # 网格搜索epoch可以少一点
+  early_stopping: 10
+  grad_acc: 4
+  pretrained: false
+  project_name: ai-classifier
+  task_name: resnet18-grid-search
+
+# 总组合数: 3 x 3 x 2 x 2 = 36 个试验

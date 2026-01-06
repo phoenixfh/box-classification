@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export MLFLOW_TRACKING_URI=http://192.168.16.130:5000
+export AWS_ACCESS_KEY_ID=mlflow
+export AWS_SECRET_ACCESS_KEY=mlflow@SN
+export AWS_ENDPOINT_URL=http://192.168.16.130:9000
+export MLFLOW_S3_IGNORE_TLS=true

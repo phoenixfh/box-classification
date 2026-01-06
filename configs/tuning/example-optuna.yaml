@@ -1,0 +1,61 @@
+# Optuna贝叶斯优化示例配置
+# 适用场景：全面探索参数空间，自动找到最优配置（推荐）
+
+# 搜索策略
+strategy: optuna
+n_trials: 30  # 总共尝试30组参数组合
+
+# 优化目标
+metric: accuracy
+mode: maximize
+
+# 超参数搜索空间
+search_space:
+  # 模型架构：对比不同模型
+  arch:
+    type: choice
+    values: [resnet18, resnet34, resnet50, efficientnet_b0]
+  
+  # 学习率：对数范围（Optuna智能采样）
+  lr:
+    type: log_uniform
+    min: 0.0001
+    max: 0.1
+  
+  # 最终学习率比例
+  lrf:
+    type: uniform
+    min: 0.05
+    max: 0.3
+  
+  # 批量大小：从候选值中选择
+  batch_size:
+    type: choice
+    values: [64, 128, 256]
+  
+  # 图像尺寸：关键参数，影响准确率和训练速度
+  img_size:
+    type: choice
+    values: [224, 320, 640, 1024]
+  
+  # 权重衰减：对数范围
+  wd:
+    type: log_uniform
+    min: 1e-5
+    max: 1e-2
+  
+  # 学习率调度器类型
+  scheduler_type:
+    type: choice
+    values: [cosine, cosine_restarts, step]
+
+# 固定参数（不参与搜索）
+base_args:
+  data_path: /mnt/ssd/ai-classify-data
+  epochs: 1000
+  early_stopping: 15
+  grad_acc: 4
+  pretrained: false
+  project_name: ai-classifier
+  task_name: optuna-tuning
+
